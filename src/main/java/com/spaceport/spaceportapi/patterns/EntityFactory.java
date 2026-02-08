@@ -1,14 +1,16 @@
 package com.spaceport.spaceportapi.patterns;
 
-import com.spaceport.spaceportapi.model.*;
+import com.spaceport.spaceportapi.model.BaseEntity;
+import com.spaceport.spaceportapi.model.Pilot;
+import com.spaceport.spaceportapi.model.Ship;
 
 public class EntityFactory {
 
-    public static BaseEntity create(String type, int id, String name, String license) {
-
+    public static BaseEntity create(String type, String name, String extra) {
         return switch (type) {
-            case "PILOT" -> new Pilot(id, name, license);
-            default -> throw new IllegalArgumentException("Unknown entity type");
+            case "PILOT" -> new Pilot(name, extra);
+            case "SHIP" -> new Ship(name, Double.parseDouble(extra));
+            default -> throw new IllegalArgumentException("Unknown type: " + type);
         };
     }
 }
